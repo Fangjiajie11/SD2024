@@ -1,0 +1,10 @@
+﻿  main.cpp
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(66,31): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(66,25): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(82,30): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(82,20): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(96,34): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(96,24): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(115,31): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\SD2024-1\exp1\exp1\exp1\main.cpp(115,21): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+  exp1.vcxproj -> E:\SD2024-1\exp1\exp1\Debug\exp1.exe
