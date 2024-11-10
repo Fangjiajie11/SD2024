@@ -15,17 +15,14 @@ using namespace std;
 unordered_map<char, int> getLetterFrequencies(const string& filename) {
     unordered_map<char, int> frequencies;
 
-    // ³õÊ¼»¯×ÖÄ¸ÆµÂÊÎª0
     for (char ch = 'a'; ch <= 'z'; ++ch) {
         frequencies[ch] = 0;
     }
-
     ifstream file(filename);
     char ch;
 
-    // ¶ÁÈ¡ÎÄ¼ş²¢Í³¼ÆÆµÂÊ
     while (file.get(ch)) {
-        // ×ªÎªĞ¡Ğ´²¢¼ì²éÊÇ·ñÎª×ÖÄ¸
+        // è½¬ä¸ºå°å†™å¹¶æ£€æŸ¥æ˜¯å¦ä¸ºå­—æ¯
         ch = tolower(ch);
         if (ch >= 'a' && ch <= 'z') {
             frequencies[ch]++;
@@ -44,12 +41,9 @@ int main() {
         {'b', 116}, {'k', 51}, {'x', 5}, {'j', 21}, {'q', 7},
         {'z', 6}
     };*/
-    // Ö¸¶¨ÎÄ±¾ÎÄ¼şÃû
-    string filename = "I_have_a_dream.txt"; // Çë½«ÎÄ¼şÃûÌæ»»ÎªÄúµÄÎÄ±¾ÎÄ¼şÂ·¾¶
+    string filename = "I_have_a_dream.txt"; 
 
-    // »ñÈ¡×Ö·ûÆµÂÊ
     unordered_map<char, int> frequencies = getLetterFrequencies(filename);
-    // Êä³ö×ÖÄ¸ÆµÂÊ
     cout << "Letter Frequencies:\n";
     for (const auto& pair : frequencies) {
         cout << "'" << pair.first << "': " << pair.second << ", ";
@@ -58,12 +52,12 @@ int main() {
     HuffmanCoder huffmanCoder(frequencies);
     huffmanCoder.printCodes();
 
-    // ¶ÔÌØ¶¨µ¥´Ê½øĞĞ±àÂë
+    // å¯¹ç‰¹å®šå•è¯è¿›è¡Œç¼–ç 
     string wordToEncode = "dream";
     string encoded = huffmanCoder.encode(wordToEncode);
-    cout << wordToEncode  << "µÄhuffman±àÂë" << ": " << encoded<< endl;
+    cout << wordToEncode  << "çš„huffmanç¼–ç " << ": " << encoded<< endl;
     string wordToEncode2 = "have";
     string encoded2 = huffmanCoder.encode(wordToEncode2);
-    cout << wordToEncode2 << "µÄhuffman±àÂë " << ": " << encoded2 << endl;
+    cout << wordToEncode2 << "çš„huffmanç¼–ç  " << ": " << encoded2 << endl;
     return 0;
 }
