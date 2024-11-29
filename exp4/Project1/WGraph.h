@@ -9,25 +9,23 @@ using namespace std;
 
 class WGraph {
 private:
-    int n;  // Í¼ÖĞ½ÚµãµÄÊıÁ¿
-    vector<vector<int>> graph;  // ÁÚ½Ó¾ØÕó±íÊ¾Í¼
-    vector<pair<int, pair<int, int>>> edges;  // ±ßµÄ¼¯ºÏ (È¨ÖØ, (u, v))
-    bool isUndirected;  // Í¼µÄÀàĞÍ±êÖ¾£¬true ±íÊ¾ÎŞÏòÍ¼£¬false ±íÊ¾ÓĞÏòÍ¼
+    int n;  
+    vector<vector<int>> graph;  
+    vector<pair<int, pair<int, int>>> edges;  
+    bool isUndirected;  // å›¾çš„ç±»å‹æ ‡å¿—ï¼Œtrue è¡¨ç¤ºæ— å‘å›¾ï¼Œfalse è¡¨ç¤ºæœ‰å‘å›¾
 public:
-    // ¹¹Ôìº¯Êı£¬³õÊ¼»¯Í¼µÄ´óĞ¡
     WGraph(int nodes, bool undirected = true) : n(nodes), isUndirected(undirected), graph(nodes, vector<int>(nodes, INT_MAX)) {}
 
-    // Ìí¼Ó±ß
+  
     void addEdge(int u, int v, int weight) {
         graph[u][v] = weight;
         edges.push_back({ weight, {u, v} });
-        // Èç¹ûÊÇÎŞÏòÍ¼£¬»¹ĞèÒªÌí¼Ó·´Ïò±ß
         if (isUndirected) {
-            graph[v][u] = weight;  // ¶ÔÓÚÎŞÏòÍ¼£¬Ìí¼Ó·´Ïò±ß
+            graph[v][u] = weight;  
         }
     }
 
-    // ´òÓ¡Í¼µÄÁÚ½Ó¾ØÕó
+  
     void printGraph() {
         cout << "Graph (Adjacency Matrix):" << endl;
         for (int i = 0; i < n; ++i) {
@@ -43,54 +41,54 @@ public:
         }
     }
 
-    // DijkstraËã·¨
+    // Dijkstraç®—æ³•
     void dijkstra(int start) {
-        vector<int> dist(n, INT_MAX);  // ´æ´¢×î¶ÌÂ·¾¶
-        vector<int> prev(n, -1);  // ´æ´¢Â·¾¶ÖĞµÄÇ°Çı½Úµã
+        vector<int> dist(n, INT_MAX);  
+        vector<int> prev(n, -1);  
         dist[start] = 0;
 
-        vector<bool> visited(n, false);  // ±ê¼Ç½ÚµãÊÇ·ñÒÑ¾­·ÃÎÊ
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;  // ×îĞ¡¶Ñ
+        vector<bool> visited(n, false);  
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; 
 
-        pq.push({ 0, start });  // ´ÓÆğµã¿ªÊ¼
+        pq.push({ 0, start });  
 
         while (!pq.empty()) {
-            int u = pq.top().second;  // µ±Ç°½Úµã
-            int d = pq.top().first;   // µ±Ç°½ÚµãµÄ¾àÀë
+            int u = pq.top().second;  
+            int d = pq.top().first;   
             pq.pop();
 
-            if (visited[u]) continue;  // Èç¹ûÒÑ¾­·ÃÎÊ¹ı£¬Ìø¹ı
+            if (visited[u]) continue;  
 
             visited[u] = true;
 
-            // ¸üĞÂÁÚ½Ó½ÚµãµÄ¾àÀë
+            
             for (int v = 0; v < n; ++v) {
                 if (graph[u][v] != INT_MAX && !visited[v] && dist[u] + graph[u][v] < dist[v]) {
                     dist[v] = dist[u] + graph[u][v];
-                    prev[v] = u;  // ¼ÇÂ¼Ç°Çı½Úµã
+                    prev[v] = u;  
                     pq.push({ dist[v], v });
                 }
             }
         }
 
-        // Êä³ö×î¶ÌÂ·¾¶
+       
         for (int i = 0; i < n; ++i) {
             if (dist[i] == INT_MAX) {
-                cout << "µã " << i << " ²»¿É´ï" << endl;
+                cout << "ç‚¹ " << i << " ä¸å¯è¾¾" << endl;
             }
             else {
-                cout << "×î¶ÌÂ·¾¶´Óµã " << start << " µ½µã " << i << ": " << dist[i] << endl;
-                cout << "Â·¾¶: ";
+                cout << "æœ€çŸ­è·¯å¾„ä»ç‚¹ " << start << " åˆ°ç‚¹ " << i << ": " << dist[i] << endl;
+                cout << "è·¯å¾„: ";
                 printPath(prev, start, i);
                 cout << endl;
             }
         }
     }
 
-    // Í¨¹ıÇ°Çı½ÚµãÊı×é´òÓ¡Â·¾¶
+    
     void printPath(vector<int>& prev, int start, int end) {
         if (end == -1) {
-            cout << "ÎŞÂ·¾¶" << endl;
+            cout << "æ— è·¯å¾„" << endl;
             return;
         }
 
@@ -106,33 +104,33 @@ public:
         }
     }
 
-    // KruskalËã·¨
+    // Kruskalç®—æ³•
     void kruskalMST() {
-        // °´±ßµÄÈ¨ÖØÉıĞòÅÅĞò
+        
         sort(edges.begin(), edges.end());
 
         vector<int> parent(n);
         vector<int> rank(n, 0);
 
-        // ³õÊ¼»¯Ã¿¸ö½ÚµãµÄ¸¸½ÚµãÎª×Ô¼º
+        
         for (int i = 0; i < n; ++i) {
             parent[i] = i;
         }
 
-        vector<pair<int, int>> mstEdges;  // ´æ´¢×îĞ¡Éú³ÉÊ÷µÄ±ß
-        int mstWeight = 0;  // ¼ÇÂ¼×îĞ¡Éú³ÉÊ÷µÄ×ÜÈ¨ÖØ
+        vector<pair<int, int>> mstEdges;  
+        int mstWeight = 0;  
 
-        // ±éÀúËùÓĞ±ß£¬Ñ¡Ôñ²»ĞÎ³É»·µÄ±ß
+        
         for (auto& edge : edges) {
             int weight = edge.first;
             int u = edge.second.first;
             int v = edge.second.second;
 
-            // ²éÕÒuºÍvµÄ¸ù½Úµã
+            
             int root_u = findParent(u, parent);
             int root_v = findParent(v, parent);
 
-            // Èç¹ûuºÍvµÄ¸ù½Úµã²»ÏàÍ¬£¬ËµÃ÷²»»áĞÎ³É»·£¬¼ÓÈë×îĞ¡Éú³ÉÊ÷
+            
             if (root_u != root_v) {
                 unionSets(u, v, parent, rank);
                 mstEdges.push_back({ u, v });
@@ -141,20 +139,20 @@ public:
         }
 
         
-        cout << "×îĞ¡Ö§³ÅÊ÷ (Kruskal):" << endl;
+        cout << "æœ€å°æ”¯æ’‘æ ‘ (Kruskal):" << endl;
         for (auto& edge : mstEdges) {
             cout << edge.first << " - " << edge.second << endl;
         }
-        cout << "MSTµÄ×ÜÈ¨ÖØ: " << mstWeight << endl;
+        cout << "MSTçš„æ€»æƒé‡: " << mstWeight << endl;
     }
 
-    // ²éÕÒ¸ù½Úµã
+   
     int findParent(int u, vector<int>& parent) {
         if (parent[u] == u) return u;
-        return parent[u] = findParent(parent[u], parent);  // Â·¾¶Ñ¹Ëõ
+        return parent[u] = findParent(parent[u], parent);  
     }
 
-    // ºÏ²¢Á½¸ö¼¯ºÏ
+  
     void unionSets(int u, int v, vector<int>& parent, vector<int>& rank) {
         int root_u = findParent(u, parent);
         int root_v = findParent(v, parent);
@@ -173,7 +171,7 @@ public:
         }
     }
 
-    //×îĞ¡Ö§³ÅÊ÷£¨prim£©:
+    //æœ€å°æ”¯æ’‘æ ‘ï¼ˆprimï¼‰:
     void primMST() {
         
         vector<bool> inMST(n, false);
@@ -217,11 +215,11 @@ public:
             }
         }
 
-        cout << "×îĞ¡Ö§³ÅÊ÷£¨prim£©:" << endl;
+        cout << "æœ€å°æ”¯æ’‘æ ‘ï¼ˆprimï¼‰:" << endl;
         for (auto& edge : mstEdges) {
             cout << edge.first << " - " << edge.second << endl;
         }
-        cout << "MSTµÄ×ÜÈ¨ÖØ: " << mstWeight << endl;
+        cout << "MSTçš„æ€»æƒé‡: " << mstWeight << endl;
     }
 
 };
